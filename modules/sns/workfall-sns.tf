@@ -6,7 +6,7 @@ resource "aws_sns_topic" "workfall_sns" {
 
 resource "aws_sns_topic_policy" "workfall_sns" {
   arn    = aws_sns_topic.workfall_sns.arn
-  policy =
+  policy = data.template_file.workflow_sns.rendered
 }
 
 resource "aws_sns_topic_subscription" "workfall_sns" {
