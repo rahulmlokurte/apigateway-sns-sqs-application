@@ -33,6 +33,7 @@ module "roles" {
 
 module "sns" {
   source = "./modules/sns"
+  workfall_sqs_queue_arn = module.sqs.workfall_sqs_queue_arn
 }
 
 module "sqs" {
