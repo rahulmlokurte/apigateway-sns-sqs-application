@@ -1,0 +1,14 @@
+{
+  "Version": "2012-10-17",
+  "Id": "sqs-workflow-policy",
+  "Statement": [
+    {
+      "Sid": "sqs-workflow-policy",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "*"
+      },
+      "Action": "sqs:SendMessage",
+      "Resource": "${workfall_sqs_arn}"
+    }
+  ]}
