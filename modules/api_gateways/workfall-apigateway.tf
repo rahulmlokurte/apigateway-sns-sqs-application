@@ -40,10 +40,22 @@ resource "aws_api_gateway_deployment" "workfall_api" {
   }
 }
 
+resource "aws_cloudwatch_log_group" "workfall_api" {
+  name              = "workfall-api-logs"
+  retention_in_days = 7
+}
+
 resource "aws_api_gateway_stage" "workfall_api" {
   deployment_id = aws_api_gateway_deployment.workfall_api.id
   rest_api_id   = aws_api_gateway_rest_api.workfall_api.id
   stage_name    = "workfall"
+  access_log_settings {
+    destination_arn = aws_cloudwatch_log_group.workfall_api.arn
+    format          = "$context.identity.sourceIp - - [$context.requestTime] \"$context.httpMethod $context.routeKey $context.protocol\" $context.status $context.responseLength $context.requestId $context.integrationErrorMessage"
+  }
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_api_gateway_method_settings" "workfall_api" {
@@ -51,15 +63,9 @@ resource "aws_api_gateway_method_settings" "workfall_api" {
   rest_api_id = aws_api_gateway_rest_api.workfall_api.id
   stage_name  = aws_api_gateway_stage.workfall_api.stage_name
   settings {
-    logging_level = "INFO"
-    data_trace_enabled = true
     metrics_enabled = true
+    logging_level   = "INFO"
   }
 }
 
-resource "aws_cloudwatch_log_group" "workfall_api" {
-  name              = "API-Gateway-Execution-Logs_${aws_api_gateway_rest_api.workfall_api.id}/${aws_api_gateway_stage.workfall_api.stage_name}"
-  retention_in_days = 7
-  depends_on = [aws_api_gateway_deployment.workfall_api]
-}
 
