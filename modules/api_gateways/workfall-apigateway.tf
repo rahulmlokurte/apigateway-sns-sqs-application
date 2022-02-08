@@ -33,6 +33,21 @@ resource "aws_api_gateway_integration" "workfall_api" {
   credentials             = var.api_gateway_role_arn
 }
 
+resource "aws_api_gateway_method_response" "workfall_api" {
+  http_method = aws_api_gateway_method.workfall_api.http_method
+  resource_id = aws_api_gateway_resource.workfall_api.id
+  rest_api_id = aws_api_gateway_rest_api.workfall_api.id
+  status_code = "200"
+}
+
+resource "aws_api_gateway_integration_response" "workfall_api" {
+  http_method = aws_api_gateway_method.workfall_api.http_method
+  resource_id = aws_api_gateway_resource.workfall_api.id
+  rest_api_id = aws_api_gateway_rest_api.workfall_api.id
+  status_code = aws_api_gateway_method_response.workfall_api.status_code
+  depends_on = [aws_api_gateway_integration.workfall_api]
+}
+
 resource "aws_api_gateway_deployment" "workfall_api" {
   rest_api_id = aws_api_gateway_rest_api.workfall_api.id
   lifecycle {
