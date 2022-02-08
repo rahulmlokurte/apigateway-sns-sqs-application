@@ -46,6 +46,17 @@ resource "aws_api_gateway_stage" "workfall_api" {
   stage_name    = "workfall"
 }
 
+resource "aws_api_gateway_method_settings" "workfall_api" {
+  method_path = "*/*"
+  rest_api_id = aws_api_gateway_rest_api.workfall_api.id
+  stage_name  = aws_api_gateway_stage.workfall_api.stage_name
+  settings {
+    logging_level = "INFO"
+    data_trace_enabled = true
+    metrics_enabled = true
+  }
+}
+
 resource "aws_cloudwatch_log_group" "workfall_api" {
   name              = "API-Gateway-Execution-Logs_${aws_api_gateway_rest_api.workfall_api.id}/${aws_api_gateway_stage.workfall_api.stage_name}"
   retention_in_days = 7
