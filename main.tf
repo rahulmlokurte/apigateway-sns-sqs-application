@@ -34,3 +34,7 @@ module "roles" {
 module "sns" {
   source = "./modules/sns"
 }
+
+module "sqs" {
+  source = "./modules/sqs"
+}
