@@ -44,5 +44,11 @@ resource "aws_api_gateway_stage" "workfall_api" {
   deployment_id = aws_api_gateway_deployment.workfall_api.id
   rest_api_id   = aws_api_gateway_rest_api.workfall_api.id
   stage_name    = "workfall"
+  depends_on = [aws_cloudwatch_log_group.workfall_api]
+}
+
+resource "aws_cloudwatch_log_group" "workfall_api" {
+  name = "API-Gateway-Execution-Logs_${aws_api_gateway_rest_api.workfall_api.id}/${aws_api_gateway_stage.workfall_api.stage_name}"
+  retention_in_days = 7
 }
 
