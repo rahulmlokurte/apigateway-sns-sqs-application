@@ -3,6 +3,8 @@
 This repository consist of a simple application that uses AWS API Gateway to push the message
 to SNS and then SQS subscribes to the SNS topic.
 
+![apigateway-sns-sqs](https://github.com/rahulmlokurte/apigateway-sns-sqs-application/blob/main/images/apigateway-sns-sqs-1.png?raw=true)
+
 ## Run the application
 
 - Clone the [apigateway-sns-sqs-application](https://github.com/rahulmlokurte/apigateway-sns-sqs-application) GitHub repository.
