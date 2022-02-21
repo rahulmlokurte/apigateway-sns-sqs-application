@@ -13,7 +13,7 @@ to SNS and then SQS subscribes to the SNS topic.
     - `terraform plan -out output.plan`
     - `terraform apply "output.plan"`
 
-Resources Deployed:
+## Resources Deployed:
 
 - It will deploy an API gateway with the GET endpoint at '/sendMessage' where the parameters are
 `TopicArn` and `Message`. Where **TopicArn** is the SNS topic ARN and **Message** is the message to be sent.
